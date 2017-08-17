@@ -1,0 +1,77 @@
+<!--
+  Generated template for the ContactDetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{SupplierName}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<!--<ion-content class="modal"> -->
+<ion-content padding>
+
+<form [formGroup]="myForm" class="form">
+    <ion-item>
+        <ion-label><ion-icon name="phone-portrait" color="primary"></ion-icon>  {{Phone}}</ion-label> 
+    </ion-item>
+Enter Additional Details 
+<ion-item>
+                <ion-label stacked><ion-icon name="home" color="primary"></ion-icon>* Organization</ion-label>
+                <ion-input formControlName="Orgn" type="text" placeholder="Company Name"  [class.invalid]="!myForm.controls.Orgn.valid && myForm.controls.Orgn.dirty"></ion-input>
+            </ion-item>
+<ion-item class="error-message" *ngIf="!myForm.controls.Orgn.valid && myForm.controls.Orgn.dirty">
+<p>Please enter the name of the contact's organization</p>
+</ion-item>
+ 
+ <ion-item> 
+        <ion-label  stacked ><ion-icon name="pin" color="primary"></ion-icon>* City</ion-label>    
+        <ion-input formControlName="City" type="text" placeholder="Company Location" [class.invalid]="!myForm.controls.City.valid &&
+myForm.controls.City.dirty"></ion-input>
+</ion-item>
+<ion-item class="error-message" *ngIf="!myForm.controls.City.valid && myForm.controls.City.dirty">
+<p>Please enter the city/nearest city to the supplier location</p></ion-item>
+        <ion-item>
+               <ion-label  stacked ><ion-icon name="pricetags" color="primary"></ion-icon>* Business Category</ion-label>
+                    <ion-select formControlName="Category" placeholder="Business category" [class.invalid]="!myForm.controls.Category.valid &&
+myForm.controls.Category.dirty">
+<ion-option *ngFor="let Catgry of Categories|async">{{Catgry.Category}}</ion-option>
+                    </ion-select>
+                   
+ </ion-item>
+<ion-item class="error-message" *ngIf="!myForm.controls.Category.valid && myForm.controls.Category.dirty">
+<p>Please assign a primary business category</p>
+</ion-item>
+    <ion-item> 
+        <ion-label  stacked ><ion-icon name="bulb" color="primary"></ion-icon>* Recommended Product</ion-label>    
+        <ion-input formControlName="MainProduct" type="text" placeholder="One product that you recommend" [class.invalid]="!myForm.controls.MainProduct.valid && myForm.controls.MainProduct.dirty">
+</ion-input>
+</ion-item>
+<ion-item class="error-message" *ngIf="!myForm.controls.MainProduct.valid && myForm.controls.MainProduct.dirty">
+<p>Please enter product that you recommend from this supplier</p>
+</ion-item>
+<ion-label  stacked ><ion-icon name="star" color="primary"></ion-icon>  Your Rating</ion-label>    
+        <ion-rating 
+    [numStars]="5"
+    [readOnly]="false"
+    [value]="0"
+    (clicked)="starClicked($event)">
+</ion-rating>
+  
+ <ion-item>   
+   <ion-label  stacked><ion-icon name="chatboxes" color="primary"></ion-icon>  Additional Info</ion-label>     
+        <ion-textarea formControlName="Comments" placeholder="Please share  any info that will assist your fellow members e.g. supplier positive aspects , areas of concerns etc."></ion-textarea>
+ </ion-item>
+ 
+  <button ion-button (click)="closeModal()" ><ion-icon name="arrow-round-back" clear ></ion-icon>Cancel</button>
+
+
+  <button ion-button (click)="save()" [disabled]="!myForm.valid"><ion-icon name="checkmark"></ion-icon>Submit Info</button>
+
+ </form>
+</ion-content>

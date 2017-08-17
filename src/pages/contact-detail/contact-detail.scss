@@ -1,0 +1,61 @@
+page-contact-detail {
+.modal{
+ 
+background-color:rgba(0,0,0,0.7);
+}
+
+
+/*******************
+LOGIN FORM
+*******************/
+
+.procu-form {
+position: absolute;
+top: 5px;
+left: 35px;
+
+width: 86%;
+height: 82%;
+
+    
+    
+    background: #f3f3f3;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    
+    box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+  form {
+  
+    margin-bottom: 32px;
+    button {
+      margin-top: 20px;
+    }
+  }
+
+  p {
+    font-size: 0.8em;
+    color: #d2d2d2;
+  }
+
+  ion-label {
+    margin-left: 5px;
+    font-size: 1.1 em;
+    color: #107698;
+  }
+
+  ion-input {
+    padding: 5px;
+  }
+
+  .invalid {
+    border-bottom: 1px solid #FF6153;
+  }
+
+  .error-message .item-inner {
+    border-bottom: 0 !important;
+  }
+}
+

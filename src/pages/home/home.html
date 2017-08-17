@@ -1,14 +1,49 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Procurist 1.0</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="logOut()">
+        <ion-icon name="log-out"></ion-icon>
+        </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content class="card-background-page">
+<h5  *ngIf="authData.user | async"> Welcome {{ (authData.user | async)?.email }}!</h5>
+<ion-list>
+<button ion-item (click)="launchContribution()">
+<ion-card>
+
+    <ion-card-content>
+    
+  <img src="assets/img/Contribution.jpg"/>
+  <div class="card-title">Contribute</div>
+  <!--<div class="card-subtitle">Share your supplier contacts</div>-->
+  </ion-card-content>
+</ion-card>
+
+</button>
+<button ion-item (click)="launchSearch()">
+  <ion-card>
+  <ion-card-content>
+    <img src="assets/img/search.jpg"/>
+    <div class="card-title">Search</div>
+    <!--<div class="card-subtitle">Search all shared suppliers</div>-->
+    </ion-card-content>
+  </ion-card>
+</button>
+<button ion-item (click)="launchDiscussion()">
+  <ion-card>
+  <ion-card-content>
+    <img src="assets/img/discussion.jpg"/>
+    <div class="card-title">Discussion Forum</div>
+   <!-- <div class="card-subtitle">Discuss with fellow buyers</div>-->
+   </ion-card-content>
+  </ion-card>
+</button>
+</ion-list>
 </ion-content>
