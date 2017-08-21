@@ -1,6 +1,6 @@
 import { Component} from '@angular/core';
 import { NavController,Platform,ToastController,ModalController,LoadingController ,AlertController,IonicPage} from 'ionic-angular';
-import * as _ from 'lodash'; 
+//import * as _ from 'lodash'; 
 import { Storage } from '@ionic/storage';
 // import {UniquePipe} from '../../pipes/unique/unique'
 
@@ -23,12 +23,14 @@ name: 'ContactList'
 })
 export class ContactListPage  {
   contactlist: any;
-  LoadedcontactList:any;
+  Loadedcontactlist:any;
   shouldAnimate: boolean = true;
  groupedContacts = [];
   cont=[];
  isSubmitstatus:any;
+ public showcontactlist:boolean;
   constructor(public navCtrl: NavController,public platform: Platform,public toastCtrl: ToastController,public modalCtrl: ModalController,public loadingCtrl: LoadingController,public storage:Storage,public alertCtrl:AlertController) {
+           this.showcontactlist=false;
            this.groupContacts('');
   }
 
@@ -58,7 +60,7 @@ share(contact){
   /* let myModal = this.modalCtrl.create(ContactDetailPage, obj);
     myModal.present();*/
    
-    this.navCtrl.push(ContactDetailPage, {SupplierName: name, Phone: phone});
+    this.navCtrl.push(ContactDetailPage, {source:'ContactList',SupplierName: name, Phone: phone});
   });
 }
 update(contact){
@@ -69,13 +71,16 @@ del(contact){
 }
 filterContacts(searchTerm:any){
   var q = searchTerm.target.value;
+  if (q.length<3) {
+    return;
+  }
 this.groupContacts(q);  
 }
 groupContacts(contactperson){
-    Contacts.find(['displayName', 'name', 'phoneNumbers', 'emails','organizations'], {filter: contactperson, multiple: true})
+    Contacts.find(['displayName', 'name'], {filter: contactperson, multiple: true})
     .then(conts => {
-     // this.contactlist=conts; for search
-      
+     this.contactlist=conts; //for search
+     this.Loadedcontactlist=conts; 
       conts.forEach((contname)=>{
           this.cont.push(contname.displayName);
       });
@@ -108,38 +113,7 @@ groupContacts(contactperson){
     
    
     };
- recreategroupContacts(list){
-     this.cont=[];
-list.forEach((contname)=>{
-          this.cont.push(contname.displayName);
-      });
-    
-        let sortedContacts = this.cont.sort();
-        
-        let currentLetter = false;
-        let currentContacts = [];
  
-        sortedContacts.forEach((value, index) => {
-            if(value.charAt(0) != currentLetter){
- 
-                currentLetter = value.charAt(0);
-
-                let newGroup = {
-                    letter: currentLetter,
-                    contacts: []
-                };
-
-                currentContacts = newGroup.contacts;
-                this.groupedContacts.push(newGroup);
- 
-            } 
- 
-            currentContacts.push(value);
-
-        });
-    
-   return this.groupedContacts;
-    };   
    /* groupContacts(){
         var contnm;
        Contacts.find(['displayName', 'name', 'phoneNumbers', 'emails','organizations'], {filter: "", multiple: false})
@@ -170,13 +144,13 @@ contnm=value.displayName;
     }*/
     
     initializeItems(){
-  this.groupedContacts = this.contactlist;
+  this.contactlist = this.Loadedcontactlist;
   
 }
 
 getcontactlist(searchTerm:any) {
   // Reset items back to all of the items
- 
+
   this.initializeItems();
 
   // set q to the value of the searchbar
@@ -184,10 +158,12 @@ getcontactlist(searchTerm:any) {
 
 
   // if the value is an empty string don't filter the items
-  if (!q) {
+  if ((!q)||(q.length<3)) {
+      this.showcontactlist=false;
     return;
-  }
-var list=this.contactlist.filter((v)=>{
+  } 
+  this.showcontactlist=true;
+this.contactlist=this.contactlist.filter((v)=>{
     console.log('vd='+v.displayName);
         if(v.displayName && q) {
       if (v.displayName.toLowerCase().indexOf(q.toLowerCase()) > -1) {
@@ -196,7 +172,7 @@ var list=this.contactlist.filter((v)=>{
      }
       return false;   
    });
-this.groupedContacts=this.recreategroupContacts(list);
+//this.groupedContacts=this.recreategroupContacts(list);
 }
     presentAlert() {
   let alert = this.alertCtrl.create({

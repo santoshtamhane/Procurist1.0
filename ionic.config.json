@@ -1,6 +1,6 @@
 {
   "name": "Procurist1.0",
-  "app_id": "",
+  "app_id": "36c22be3",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}

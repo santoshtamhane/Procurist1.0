@@ -28,28 +28,13 @@ public searches:FirebaseListObservable<any[]>;
   constructor(public navCtrl: NavController, public navParams: NavParams,private db: AngularFireDatabase,public authData:AuthProvider) {
       this.shownGroup = null;
       this.Categories=this.db.list('/Category/');
-     // this.Products=this.db.list('/SupplierInfo/');
-    //  this.Locations=this.db.list('/bylocation/');
-     // this.SearchCriteria="Category";
-     //  this.curruser=this.authData.getUser();
-       //this.searches=this.db.list('/supplierinfobycatlocrating/')
-  }
+   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SearchQueryPage');
   }
-  fullsearch(categ,locn,rating){
-      if ((!categ)||(categ=='All')){categ=''};
-      if ((!locn)||(locn=='All')){locn=''};
-      if ((!rating)||(rating='All')){rating=''};
-      var searchquery='/supplierinfobycatlocrating/'+categ+'/'+locn+'/'+rating;
+    //searchquery=searchquery.replace(/\/\//g, '/');//replaces double forward slash to single
       
-   searchquery=searchquery.replace(/\/\//g, '/');
-    searchquery=searchquery.replace(/\/\//g, '/');
-    searchquery=searchquery.replace(/\/\//g, '/');//replaces double forward slash to single
-      this.searches=this.db.list(searchquery);
-      console.log('searchquery='+searchquery);
-  }
 search(product,category){
     
     let params={

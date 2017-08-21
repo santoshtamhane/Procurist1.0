@@ -1,4 +1,4 @@
-import { FormControl } from '@angular/forms';
+import { FormControl,FormGroup } from '@angular/forms';
 import { Injectable } from '@angular/core';
 /*
   Generated class for the EmailProvider provider.
@@ -24,4 +24,15 @@ static isValid(control: FormControl){
     };
 
   }
+  static isProduct2Reqd(control:FormControl){
+     
+         /*     if (group.get('Category2').value) {
+          return null;
+        }*/
+
+      return{
+          "isProduct2Reqd":true
+      }
+  
+}
 }

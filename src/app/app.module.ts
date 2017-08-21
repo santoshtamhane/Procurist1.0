@@ -11,7 +11,8 @@ import {ContactListPage} from '../pages/contact-list/contact-list';
 import {SearchQueryPage} from '../pages/search-query/search-query';
 import {ContactDetailPage} from '../pages/contact-detail/contact-detail';
 import {SearchResultPage} from '../pages/search-result/search-result';
-
+import { RatePage } from '../pages/rate/rate';
+import {UserProfilePage} from '../pages/user-profile/user-profile';
 import { AuthProvider } from '../providers/auth/auth';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { IonicStorageModule } from '@ionic/storage'
@@ -24,7 +25,7 @@ import { IonRatingComponent } from '../components/ion-rating/ion-rating';
 
 const cloudSettings: CloudSettings = {
   'core': {
-    'app_id': '5efb78f9'
+    'app_id': '36c22be3'
   }
 };
 export const firebaseConfig = {
@@ -40,6 +41,8 @@ export const firebaseConfig = {
   declarations: [
     MyApp,
     HomePage,
+    UserProfilePage,
+    RatePage,
     IntroPage,
     ContactListPage,
     ContactDetailPage,
@@ -60,7 +63,9 @@ export const firebaseConfig = {
   entryComponents: [
     MyApp,
     HomePage,
+    UserProfilePage,
     IntroPage,
+    RatePage,
     ContactListPage,
     SearchQueryPage,
     ContactDetailPage,

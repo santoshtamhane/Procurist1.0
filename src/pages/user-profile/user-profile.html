@@ -1,51 +1,49 @@
 <!--
-  Generated template for the SignUpPage page.
+  Generated template for the UserProfilePage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>SignUp</ion-title>
+<ion-navbar>
+<button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon> 
+    </button>
+    <ion-title>My Profile</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="goHome()">
+        <ion-icon name="home"></ion-icon>
+        </button>
+    </ion-buttons> 
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-<ion-header>
-<ion-navbar color="primary">
-<ion-title>
-Create an Account
-</ion-title>
-</ion-navbar>
-</ion-header>
-<ion-content padding>
-<img src="assets/img/logo.jpg" class="auth-img">
-<form [formGroup]="signupForm" (submit)="signupUser()" novalidate>
+ <form [formGroup]="signupForm" (submit)="updateUser()" novalidate>
  <ion-item>
       <ion-label stacked>Name</ion-label>
-      <ion-input formControlName="myName" placeholder="Your Name" >
+      <ion-input formControlName="myName" [(ngModel)]="myName">
        </ion-input>
     </ion-item>
     
     <ion-item>
       <ion-label stacked>Phone</ion-label>
-      <ion-input formControlName="myPhone" placeholder="Your Mobile Number" >
+      <ion-input formControlName="myPhone" value={{myPhone}} [(ngModel)]="myPhone" type="phone" [attr.maxlength]=10>
        </ion-input>
     </ion-item>
     
     <ion-item>
       <ion-label stacked>Organization</ion-label>
-      <ion-input formControlName="myOrg" placeholder="Your Organization" >
+      <ion-input formControlName="myOrg" [(ngModel)]="myOrg" >
        </ion-input>
     </ion-item>
     
     
     <ion-item>
       <ion-label stacked>Email</ion-label>
-      <ion-input formControlName="email" type="email" placeholder="Your email address" 
+      <ion-input formControlName="email" [(ngModel)]="email" type="email" 
         [class.invalid]="!signupForm.controls.email.valid && signupForm.controls.email.dirty">
       </ion-input>
     </ion-item>
@@ -56,7 +54,7 @@ Create an Account
 
     <ion-item>
       <ion-label stacked>Password</ion-label>
-      <ion-input formControlName="password" type="password" placeholder="Your password" 
+      <ion-input formControlName="password" type="password" 
         [class.invalid]="!signupForm.controls.password.valid && signupForm.controls.password.dirty">
       </ion-input>
     </ion-item>
@@ -64,10 +62,16 @@ Create an Account
       *ngIf="!signupForm.controls.password.valid  && signupForm.controls.password.dirty">
       <p>Your password needs more than 6 characters.</p>
     </ion-item>
-<button ion-button block type="submit" [disabled]="!signupForm.valid">
-Create an Account
-</button>
-</form>
-</ion-content>
-
+    </form>
+    <hr>
+    <ion-label  stacked ><ion-icon name="pricetags" color="primary"></ion-icon> Companies I submitted</ion-label>
+<ion-list>
+  <ion-item *ngFor="let c of Contributions|async; let i=index">
+  <h1>{{c.Orgn}}</h1>
+   <h3>{{c.Supplier}}</h3>
+   </ion-item>
+    </ion-list>
+    
+    
+    
 </ion-content>

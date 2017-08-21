@@ -5,8 +5,11 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
+<button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon> 
+    </button>
+
     <ion-title>Search</ion-title>
   </ion-navbar>
 </ion-header>
@@ -15,7 +18,9 @@
 
 <ion-label  stacked ><ion-icon name="pricetags" color="primary"></ion-icon> Click to Choose Product Category</ion-label>
 <ion-list>
-  <ion-item *ngFor="let c of Categories|async; let i=index" text-wrap (click)="toggleGroup(i,c.$key)" [ngClass]="{active: isGroupShown(i)}">
+
+  <ion-item *ngFor="let c of Categories|async; let i=index" text-wrap (click)="toggleGroup(i,c.$key)" [ngClass]={active:isGroupShown(i)}>
+
     <ion-thumbnail item-start>
             <img src="assets/img/{{c.$key}}.jpg">
         </ion-thumbnail> 
@@ -25,11 +30,11 @@
     </h1>
     <div *ngIf="isGroupShown(i)">
     <ion-list>
-    <ion-item *ngFor="let p of Products|async" text-wrap (click)="search(p.$key,c.$key)">
-    <h3>
+    <ion-item *ngFor="let p of Products|async" text-wrap (click)="search(p.$key,c.$key)" >
+    <h2>
       {{p.$key}}
-      <ion-icon color="secondary" item-right></ion-icon>
-    </h3>
+      <ion-icon color="secondary" name='arrow-dropright' item-right></ion-icon>
+    </h2>
     </ion-item>
   </ion-list>
    </div>

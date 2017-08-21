@@ -15,7 +15,7 @@
 <ion-content class="card-background-page">
 <h5  *ngIf="authData.user | async"> Welcome {{ (authData.user | async)?.email }}!</h5>
 <ion-list>
-<button ion-item (click)="launchContribution()">
+<button ion-item (click)="showRadio()">
 <ion-card>
 
     <ion-card-content>

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams,ModalController } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
 import {HomePage} from '../../pages/home/home';
+import {RatePage} from '../../pages/rate/rate';
 /**
  * Generated class for the SearchResultPage page.
  *
@@ -24,16 +25,17 @@ public AllComments:FirebaseListObservable<any[]>;
 public viewindex:any;
 public trxnval:any;
 public rating:any;
+public contributorcount:any;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private db: AngularFireDatabase) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private db: AngularFireDatabase,public modalCtrl:ModalController) {
       this.Category = navParams.get('Category'); 
      
       this.Product = navParams.get('Product');
 this.searches=this.db.list('/byProduct/'+this.Category+'/'+this.Product);
   
-this.Locations=this.db.list('/bycategory-prod-loc/'+this.Category+'/'+this.Product);
-      
+//this.Locations=this.db.list('/bycategory-prod-loc/'+this.Category+'/'+this.Product);
+   this.Locations=this.searches;   
   }
 filterLocn(locn:string){
 if((locn)&&(locn!='All')){
@@ -55,14 +57,14 @@ else{
 goHome(){
     this.navCtrl.setRoot(HomePage);
 }
-getAvgRating(orgn){
+getAvgRating(orgn,choice){
   
     var subtotal=0;
     var averagerating=0;
     var count=0;
 
    
-this.db.object('/Orgn/'+orgn+'/',{preserveSnapshot:true})
+this.db.object('/Orgn/'+orgn,{preserveSnapshot:true})
 .subscribe(snapshots=> {
     
        snapshots.forEach((snapshot)=>{
@@ -70,9 +72,11 @@ this.db.object('/Orgn/'+orgn+'/',{preserveSnapshot:true})
            var rateobj=snapshot.val();
            if (rateobj){
             var trxnvl=rateobj.rate*1;
+            console.log('trxnval='+trxnvl);
+            if(trxnvl>0){
                         subtotal += trxnvl;
                         count++; 
-                    console.log('subtotal='+subtotal);
+           console.log('subtotal='+subtotal);}
     }
        })
        
@@ -80,23 +84,20 @@ this.db.object('/Orgn/'+orgn+'/',{preserveSnapshot:true})
       averagerating=subtotal/count;
       
   }    ; 
- // console.log('returning'+averagerating);
-  
-   return averagerating;
+ 
+   
     })  
-
+this.contributorcount=count;
 this.trxnval=averagerating;}
 
 getAllComments(orgn,i){
   this.viewindex=i;
-   this.AllComments=this.db.list('/SupplierInfo',{
-   query: {
-orderByChild: 'Orgn',
-equalTo: orgn
-    }
-   }); 
+   this.AllComments=this.db.list('/Orgn/'+orgn); 
 }
-rate(orgn){
-    
+rate(orgn,product,category){
+     let obj = {Orgn: orgn, Product: product,Category:category};
+
+   let myModal = this.modalCtrl.create(RatePage, obj);
+    myModal.present();
 }
 }
