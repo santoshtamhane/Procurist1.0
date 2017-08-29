@@ -14,27 +14,40 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content >
 
-<ion-label  stacked ><ion-icon name="pricetags" color="primary"></ion-icon> Click to Choose Product Category</ion-label>
+<ion-label  stacked><ion-icon name="pricetags" color="primary"></ion-icon> Click to Choose Product Category</ion-label>
 <ion-list>
 
   <ion-item *ngFor="let c of Categories|async; let i=index" text-wrap (click)="toggleGroup(i,c.$key)" [ngClass]={active:isGroupShown(i)}>
 
-    <ion-thumbnail item-start>
+    <!--<ion-thumbnail item-start>
             <img src="assets/img/{{c.$key}}.jpg">
-        </ion-thumbnail> 
+        </ion-thumbnail> -->
+        <ion-card class="searchq">
+         
+        <ion-card-content>
     <h1>
-      {{c.$key}}
-      <ion-icon color="primary" item-right [name]="isGroupShown(i) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+    
+      <ion-row>
+      <ion-col col-1>{{i+1}}</ion-col>
+      <ion-col col-10>{{c.$key}} </ion-col>
+      <ion-col col-1><ion-icon color="#107698" item-end [name]="isGroupShown(i) ? 'arrow-dropdown-circle' : 'arrow-dropright-circle'"></ion-icon></ion-col></ion-row>
     </h1>
+   
+    </ion-card-content>
+    </ion-card>
+    
     <div *ngIf="isGroupShown(i)">
-    <ion-list>
-    <ion-item *ngFor="let p of Products|async" text-wrap (click)="search(p.$key,c.$key)" >
-    <h2>
-      {{p.$key}}
-      <ion-icon color="secondary" name='arrow-dropright' item-right></ion-icon>
-    </h2>
+    <ion-list >
+    <ion-item style="background-color:map-get($colors:light)" *ngFor="let p of Products|async" text-wrap (click)="search(p.$key,c.$key)" >
+    
+
+     <ion-row>
+     <ion-col col-11> {{p.$key}}</ion-col>
+      <ion-col col-1> <ion-icon color="secondary" name='arrow-dropright' item-end></ion-icon></ion-col>
+      </ion-row>
+
     </ion-item>
   </ion-list>
    </div>

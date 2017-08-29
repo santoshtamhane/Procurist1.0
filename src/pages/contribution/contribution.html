@@ -1,0 +1,48 @@
+<!--
+  Generated template for the ContributionPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+ <ion-navbar color='primary'>
+<button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon> 
+    </button>
+    <ion-title>My Contribution</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="goHome()">
+        <ion-icon name="home"></ion-icon>
+        </button>
+    </ion-buttons> 
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+<div>
+ <button ion-button block (click)="openMenu()" color="secondary">
+    Contribute
+  </button>
+ </div>
+ <div>
+<h1> My List of Suppliers :{{(Contributions|async)?.length}}</h1>
+(click a name to edit)
+
+<ion-list>
+  <ion-item *ngFor="let c of Contributions|async;let i=index" (click)="loadSupplierInfo(c.Supplier,c.Phone,c.Orgn)">
+<ion-row>
+<ion-col col-1><ion-icon name="create" color="primary"></ion-icon></ion-col>
+<ion-col col-1>{{i+1}}.</ion-col>
+<ion-col col-10>
+  <h1>{{c.Orgn}}</h1>
+  <h2>{{c.Category1}}-{{c.MainProduct1}}</h2>
+   <h3>{{c.Supplier}}</h3>
+   </ion-col>
+   </ion-row>
+   </ion-item>
+    </ion-list>
+    </div>
+</ion-content>

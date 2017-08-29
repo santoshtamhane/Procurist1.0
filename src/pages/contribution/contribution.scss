@@ -1,0 +1,28 @@
+page-contribution {
+  .ion-md-share {
+    color: #ED4248;
+  }
+  .ion-md-arrow-dropright-circle {
+    color: #508AE4;
+  }
+  .ion-md-heart-outline {
+    color: #31D55F;
+  }
+  .action-sheet-cancel ion-icon,
+  .action-sheet-destructive ion-icon {
+    color: #757575;
+  }
+  h1{
+  color:map-get($colors,primary);
+  }
+    h2{
+  color:map-get($colors,secondary);
+  }
+    h3{
+  color:map-get($colors,dark);
+  }
+  ion-row{
+  background-color:map-get($colors,light);
+  }
+}
+

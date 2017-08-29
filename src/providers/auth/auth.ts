@@ -45,4 +45,22 @@ return this.afAuth.auth.sendPasswordResetEmail(email);
 
 logoutUser():firebase.Promise<void> { return this.afAuth.auth.signOut(); }
 
+updateUserProfile(email: string, password: string,name:string,phone:string,org:string,role:string):firebase.Promise<any> {
+   const credential = firebase.auth.EmailAuthProvider
+.credential(email, password);
+if(credential){
+return this.afAuth.auth.currentUser.reauthenticateWithCredential(credential)
+.then( user => {
+this.afDatabase.object('/userProfile/'+this.afAuth.auth.currentUser.uid).update({
+email: email,
+username:name,
+       userphone:phone,
+       userorg:org,
+        myRole:role
+});
+}, error => {
+console.log("There was an error updating the account", error);
+});
+}
+}
 }

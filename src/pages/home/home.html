@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color='primary'>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -10,40 +10,49 @@
         </button>
     </ion-buttons>
   </ion-navbar>
+  
 </ion-header>
 
 <ion-content class="card-background-page">
 <h5  *ngIf="authData.user | async"> Welcome {{ (authData.user | async)?.email }}!</h5>
-<ion-list>
-<button ion-item (click)="showRadio()">
+<ion-grid>
+<ion-row>
+<ion-col>
+<button ion-item (click)="launchContribution()">
 <ion-card>
 
     <ion-card-content>
-    
-  <img src="assets/img/Contribution.jpg"/>
+    <img  height ="180" src="assets/img/Contribution.jpg"/>
   <div class="card-title">Contribute</div>
   <!--<div class="card-subtitle">Share your supplier contacts</div>-->
   </ion-card-content>
 </ion-card>
 
 </button>
+</ion-col>
+</ion-row>
+<ion-row>
+<ion-col>
 <button ion-item (click)="launchSearch()">
   <ion-card>
   <ion-card-content>
-    <img src="assets/img/search.jpg"/>
+    <img height="180" src="assets/img/search.jpg"/>
     <div class="card-title">Search</div>
     <!--<div class="card-subtitle">Search all shared suppliers</div>-->
     </ion-card-content>
   </ion-card>
 </button>
-<button ion-item (click)="launchDiscussion()">
+</ion-col>
+</ion-row>
+</ion-grid>
+<!--<button ion-item (click)="launchDiscussion()">
   <ion-card>
   <ion-card-content>
     <img src="assets/img/discussion.jpg"/>
     <div class="card-title">Discussion Forum</div>
-   <!-- <div class="card-subtitle">Discuss with fellow buyers</div>-->
+   <!-- <div class="card-subtitle">Discuss with fellow buyers</div>
    </ion-card-content>
   </ion-card>
-</button>
-</ion-list>
+</button> -->
+
 </ion-content>

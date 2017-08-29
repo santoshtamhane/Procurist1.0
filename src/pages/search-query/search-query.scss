@@ -3,4 +3,10 @@ page-search-query {
 color:red}
 .odd{background-color:#f4f4f4;
 color:blue}
+.searchq{
+background:#f3f3f3;
+ion-col{
+  color:map-get($colors,primary);
+}
+}
 }

@@ -13,7 +13,7 @@ export class EmailProvider {
     console.log('Hello EmailProvider Provider');
   }
 static isValid(control: FormControl){
-    const re = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(control.value);
+const re = /^([a-zA-Z0-9_\-\.]+)@(?!gmail|yahoo|outlook|hotmail|mail|inbox}icloud|facebook)([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(control.value);
 
     if (re){
       return null;

@@ -5,7 +5,7 @@
   Ionic pages and navigation.
 -->
 <ion-header> 
- <ion-navbar>
+ <ion-navbar color='tertiary'>
 <button ion-button icon-only menuToggle>
       <ion-icon name="menu"></ion-icon> 
     </button>
@@ -22,45 +22,51 @@
 
 
 <ion-content >
-
-<ion-item>
-               <ion-label  stacked ><ion-icon name="pin" color="primary"></ion-icon> Location</ion-label>
+<h2>{{Category}}-{{Product}}</h2>
+<h2><ion-item>
+               <ion-label  stacked ><ion-icon name="pin" color=map-get($colors:primary)></ion-icon> Location</ion-label>
                     <ion-select [(ngModel)]="locn" placeholder="All" (ionChange)="filterLocn(locn)">
                     <ion-option>All</ion-option>
-                    <ion-option *ngFor="let location of Locations|async">{{location.$key}}</ion-option>
+                    <ion-option *ngFor="let location of Locations|async">{{location.City}}</ion-option>
                     </ion-select>
                    
- </ion-item>
+ </ion-item></h2>
   <!--<ion-list style="background-color:#c4d5e6;">
   
   <ion-item >-->
+  <h3> {{(searches|async)?.length}} results found </h3>
   <ion-card *ngFor="let srch of searches|async let i=index" #elem [attr.id]="i+1">
-  <ion-card-header style="background-color:#003b46;">
-     <h1 style="color:#fff;" >{{elem.id}}.{{ srch.Orgn }}</h1>
+  <ion-card-header>
+     <h1 style="color:#fff">{{elem.id}}.{{ srch.Orgn }}</h1>
      </ion-card-header>
-     <ion-card-content style="background-color:#07575b;" >
+     <ion-card-content>
      <ion-grid>
      <ion-row>
-     <ion-col style="background-color:#c4d5e6;">
-     <p style="color:#07575b">Contact Person</p><h2 style="color:#763626">{{srch.Supplier}} </h2>
-    <p style="color:#07575b">Location</p><h2 style="color:#763626">{{srch.City}}</h2>
+     <ion-col >
+     <p style="color:#a1d6e2">Contact Person</p><h2 style="color:#ffb745">{{srch.Supplier}} </h2>
+    <p style="color:#a1d6e2">Location</p><h2 style="color:#ffb745">{{srch.City}}</h2>
      </ion-col>
-     <ion-col style="background-color:#66a5ad">
-  <p style="color:#07575b"> Average Rating</p>
-  <h1 style="color:#fff ;font-size:500%;align:center">{{getAvgRating(srch.Orgn,1)}}{{trxnval}}</h1>
+     <ion-col >
+  <p style="color:#a1d6e2"> Average Rating</p>
+  <h1 style="color:#fff;font-size:500%;align:center">{{getAvgRating(srch.Orgn,1)}}{{trxnval}}</h1>
   <h4 style="color:#fff ;font-size:75%;align:left"> from {{contributorcount}} contributors</h4>
      </ion-col>
      </ion-row>
      </ion-grid>
      
     <ion-row>
-    <ion-col>
-    <button ion-button clear style="color:#fff" (click)="getAllComments(srch.Orgn,i)">View Comments</button>
+    <ion-col col-5>
+    <button ion-button clear style="color:secondary" (click)="getAllComments(srch.Orgn,i)" *ngIf="elem.id!=viewindex+1">View Comments</button>
+    <button ion-button clear style="color:secondary" (click)="closeAllComments()" *ngIf="elem.id==viewindex+1">Close Comments</button>
         </ion-col>
-    <ion-col>
-   <button ion-button clear style="color:#fff" (click)="rate(srch.Orgn,srch.MainProduct,srch.Category)">Rate</button>
+    <ion-col col-5>
+   <button ion-button clear style="color:secondary" (click)="rate(srch.Orgn,srch.MainProduct,srch.Category)">Rate Supplier</button>
         </ion-col>
-    
+    <ion-col col-2>
+   <button ion-button icon-only  color="dark" (click)="showModal(srch.Orgn,srch.Phone,srch.Supplier)">
+  <ion-icon name="ios-more" color="light"></ion-icon>
+</button>
+        </ion-col>
     </ion-row> 
     <ion-row>
     

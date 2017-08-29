@@ -53,7 +53,7 @@
     </ion-item>
 
     <ion-item>
-      <ion-label stacked>Password</ion-label>
+      <ion-label stacked>Current Password</ion-label>
       <ion-input formControlName="password" type="password" 
         [class.invalid]="!signupForm.controls.password.valid && signupForm.controls.password.dirty">
       </ion-input>
@@ -62,15 +62,15 @@
       *ngIf="!signupForm.controls.password.valid  && signupForm.controls.password.dirty">
       <p>Your password needs more than 6 characters.</p>
     </ion-item>
+       <button ion-button block clear (click)="goToResetPassword()">
+Reset Passsword
+</button>
+<button ion-button block type="submit" [disabled]="!signupForm.valid">
+Update
+</button>
     </form>
     <hr>
-    <ion-label  stacked ><ion-icon name="pricetags" color="primary"></ion-icon> Companies I submitted</ion-label>
-<ion-list>
-  <ion-item *ngFor="let c of Contributions|async; let i=index">
-  <h1>{{c.Orgn}}</h1>
-   <h3>{{c.Supplier}}</h3>
-   </ion-item>
-    </ion-list>
+    
     
     
     

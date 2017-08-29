@@ -7,7 +7,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { HomePage } from '../pages/home/home';
 import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { SearchQueryPage } from '../pages/search-query/search-query';
-
+import { ContributionPage } from '../pages/contribution/contribution';
 @Component({
   templateUrl: 'app.html'
 })
@@ -29,6 +29,7 @@ authListener.unsubscribe();
 // used for an example of ngFor and navigation
     this.pages = [
       { title: 'My Profile', component: UserProfilePage,icon:'person' },
+       { title: 'My Contributions', component: ContributionPage,icon:'share' },
       { title: 'Search', component: SearchQueryPage,icon:'search' }
           ];
    

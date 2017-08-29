@@ -3,6 +3,7 @@ import { NavController,AlertController } from 'ionic-angular';
 import {ContactListPage} from '../../pages/contact-list/contact-list';
 import {ContactDetailPage} from '../../pages/contact-detail/contact-detail';
 import {SearchQueryPage} from '../../pages/search-query/search-query';
+import { ContributionPage } from '../../pages/contribution/contribution';
 //import { AngularFire, FirebaseListObservable,FirebaseObjectObservable} from 'angularfire2';
 import { Storage } from '@ionic/storage';
 import { IntroPage } from '../../pages/intro/intro';
@@ -22,7 +23,7 @@ export class HomePage {
   }
     launchContribution(){ 
    
-    this.navCtrl.push(ContactListPage);
+    this.navCtrl.push(ContributionPage);
       
     }
      launchSearch(){

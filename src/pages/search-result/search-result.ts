@@ -4,6 +4,7 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 
 import {HomePage} from '../../pages/home/home';
 import {RatePage} from '../../pages/rate/rate';
+import {ContactDetailPage} from '../../pages/contact-detail/contact-detail';
 /**
  * Generated class for the SearchResultPage page.
  *
@@ -94,10 +95,20 @@ getAllComments(orgn,i){
   this.viewindex=i;
    this.AllComments=this.db.list('/Orgn/'+orgn); 
 }
+closeAllComments(){
+  this.viewindex=-1;
+   
+}
 rate(orgn,product,category){
      let obj = {Orgn: orgn, Product: product,Category:category};
 
    let myModal = this.modalCtrl.create(RatePage, obj);
     myModal.present();
-}
+}  
+    showModal(org,phone,name){
+         let myModal = this.modalCtrl.create(ContactDetailPage,{source:'SearchResult',SupplierName: name, Phone: phone,org:org});
+    myModal.present();
+        
+    }
+
 }

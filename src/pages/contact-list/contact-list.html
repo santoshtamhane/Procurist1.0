@@ -5,7 +5,7 @@
   Ionic pages and navigation.
 -->
 <ion-header> 
- <ion-navbar>
+ <ion-navbar color='tertiary'>
 <button ion-button icon-only menuToggle>
       <ion-icon name="menu"></ion-icon> 
     </button>
@@ -39,9 +39,9 @@
  
  <ion-item-group *ngFor="let group of groupedContacts">
  
-      <ion-item-divider style="background-color: #107896; color: #fff;">{{group.letter}}</ion-item-divider>
+      <ion-item-divider style="background-color: map-get($colors:primary) ; color: #fff;">{{group.letter}}</ion-item-divider>
  <ion-item-sliding *ngFor="let contact of group.contacts">
-  <button   ion-item style="color: #107896"(click)="share(contact)">
+  <button   ion-item style="color: map-get($colors:primary)"(click)="share(contact)">
           {{contact}}
     </button>
 
@@ -58,7 +58,7 @@
     </ion-list>
     <ion-list *ngIf="showcontactlist">
     <ion-item-sliding *ngFor="let contact of contactlist">
-  <button   ion-item style="color: #107896"(click)="share(contact.displayName)">
+  <button   ion-item style="background-color: map-get($colors:primary)"(click)="share(contact.displayName)">
          {{contact.displayName}}
     </button>
        

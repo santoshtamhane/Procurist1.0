@@ -157,14 +157,14 @@ getcontactlist(searchTerm:any) {
   var q = searchTerm.target.value;
 
 
-  // if the value is an empty string don't filter the items
+  // if the value is an empty string or less than 3 char don't filter the items
   if ((!q)||(q.length<3)) {
       this.showcontactlist=false;
     return;
   } 
   this.showcontactlist=true;
 this.contactlist=this.contactlist.filter((v)=>{
-    console.log('vd='+v.displayName);
+   
         if(v.displayName && q) {
       if (v.displayName.toLowerCase().indexOf(q.toLowerCase()) > -1) {
           return true;

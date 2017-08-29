@@ -2,17 +2,21 @@ page-home {
 .hr{
 background-color:#107698;
 }
+ion-navbar{
+color:#107896;
+}
 .card-background-page {
-background-color: #f3f3f3;
+color:map-get($colors,secondary);
+background: #f3f3f3;
   ion-card {
     position: relative;
     text-align: center;
-background-color:#f4f4f4;
+background:#f4f4f4;
   }
  
   .card-title {
     
-    background-color: #107896;
+    background-color: map-get($colors,primary);
     font-size: 2.0em;
     width: 100%;
     font-weight: bold;
@@ -26,6 +30,18 @@ background-color:#f4f4f4;
     width: 100%;
     color: #ffd123;
   }
-
+  scroll-content {
+        display: flex;
+        flex-direction: column;
+    }
+ 
+    ion-grid {
+        padding: 0;
+        height: 100%;
+    }
+ 
+    ion-row {
+        flex: 1;
+    }
 }
 }

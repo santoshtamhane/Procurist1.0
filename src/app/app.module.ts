@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { ContributionPage } from '../pages/contribution/contribution';
 import { IntroPage } from '../pages/intro/intro';
 import {ContactListPage} from '../pages/contact-list/contact-list';
 import {SearchQueryPage} from '../pages/search-query/search-query';
@@ -42,6 +43,7 @@ export const firebaseConfig = {
     MyApp,
     HomePage,
     UserProfilePage,
+    ContributionPage,
     RatePage,
     IntroPage,
     ContactListPage,
@@ -64,6 +66,7 @@ export const firebaseConfig = {
     MyApp,
     HomePage,
     UserProfilePage,
+    ContributionPage,
     IntroPage,
     RatePage,
     ContactListPage,

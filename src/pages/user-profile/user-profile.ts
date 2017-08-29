@@ -1,9 +1,10 @@
 import { Component ,OnInit} from '@angular/core';
-import { NavController, NavParams,ToastController } from 'ionic-angular';
+import { NavController, NavParams,ToastController,IonicPage,Loading,LoadingController,AlertController } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AuthProvider } from '../../providers/auth/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {HomePage} from '../../pages/home/home';
+
 /**
  * Generated class for the UserProfilePage page.
  *
@@ -26,8 +27,8 @@ public uid:any;
      public myPhone:string;
      public myOrg:string;
       public myRole:string;
-    
-  constructor(public navCtrl: NavController, public navParams: NavParams,public db: AngularFireDatabase,public toastCtrl:ToastController,public authData:AuthProvider,public formBuilder: FormBuilder,) {
+    public loading: Loading;
+  constructor(public navCtrl: NavController, public navParams: NavParams,public db: AngularFireDatabase,public toastCtrl:ToastController,public authData:AuthProvider,public formBuilder: FormBuilder,public loadingCtrl: LoadingController, public alertCtrl:AlertController, public authProvider: AuthProvider) {
        this.curruser=this.authData.getUser();
        this.uid=this.curruser.uid;
        this.Contributions=this.db.list('/bySubmitter/'+this.uid);
@@ -49,20 +50,43 @@ public uid:any;
       });     
   }
 ngOnInit(){
-                            
-                      
-
-     
+    
 }
   ionViewDidLoad() {
     console.log('ionViewDidLoad UserProfilePage');
     
   }
-updateUser(){
-    
-}
+
+goToResetPassword():void { this.navCtrl.push('ResetPasswordPage'); }
 goHome(){
     this.navCtrl.setRoot(HomePage);
 }
-
+updateUser():void {
+if (!this.signupForm.valid){
+console.log(this.signupForm.value);
+} else {
+this.authProvider.updateUserProfile(this.signupForm.value.email,
+this.signupForm.value.password,this.signupForm.value.myName,this.signupForm.value.myPhone,this.signupForm.value.myOrg,this.signupForm.value.myRole).then(() => {
+this.loading.dismiss().then( () => {
+this.goHome();
+});
+}, (error) => {
+this.loading.dismiss().then( () => {
+var errorMessage: string = error.message;
+let alert = this.alertCtrl.create({
+message: errorMessage,
+buttons: [
+{
+text: "Ok",
+role: 'cancel'
+}
+]
+});
+alert.present();
+});
+});
+this.loading = this.loadingCtrl.create();
+this.loading.present();
+}
+}
 }

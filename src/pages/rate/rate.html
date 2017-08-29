@@ -16,6 +16,7 @@
 
 
 <form [formGroup]="rateForm" class="modal">
+<p>I declare that my current organization has / had commercial relationship with this company and my ratings and review are a reflection of the transactions between the two organizations without any personal bias or favour</p>
 <ion-label> Please fill your review </ion-label>
     <ion-label  stacked ><ion-icon name="star" color="primary"></ion-icon>  Your Rating</ion-label>    
         <ion-rating 
@@ -27,9 +28,9 @@
   
    
    <ion-label  stacked color="primary"><ion-icon name="chatboxes" color="primary"></ion-icon>  Comments</ion-label>     
-        <ion-textarea formControlName="Comments" placeholder="e.g. supplier positive aspects , areas of concerns etc."[class.invalid]="!rateForm.controls.MainProduct.valid && rateForm.controls.MainProduct.dirty">
+        <ion-textarea formControlName="Comments" placeholder="e.g. supplier positive aspects , areas of concerns etc."[class.invalid]="!rateForm.controls.Comments.valid && rateForm.controls.Comments.dirty">
 </ion-textarea>
-<ion-item class="error-message" *ngIf="!rateForm.controls.MainProduct.valid && rateForm.controls.MainProduct.dirty">
+<ion-item class="error-message" *ngIf="!rateForm.controls.Comments.valid && rateForm.controls.Comments.dirty">
 <p>Atleast 15 characters please</p>
 </ion-item>
  <button ion-button (click)="closeModal()" ><ion-icon name="arrow-round-back" clear ></ion-icon>Cancel</button>

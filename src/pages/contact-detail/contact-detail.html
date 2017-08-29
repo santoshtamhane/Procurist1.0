@@ -6,20 +6,14 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color='tertiary'>
   <button ion-button icon-only menuToggle>
       <ion-icon name="menu"></ion-icon> 
     </button>
     <ion-title>{{Supplier}}</ion-title>
-    <h3> <ion-icon name="call" color="primary"></ion-icon> {{Phone}}</h3>
+    <h3 style="color:#011a27" > <ion-icon name="call" color="primary"></ion-icon> {{Phone}}</h3>
   </ion-navbar>
-
-</ion-header>
-
-
-<!--<ion-content class="modal"> -->
-<ion-content padding>
-<div padding>
+<ion-toolbar>
   <ion-segment [(ngModel)]="info">
     <ion-segment-button value="BasicInfo">
       Basic Information
@@ -28,197 +22,231 @@
       Company Profile
     </ion-segment-button>
   </ion-segment>
-</div>
-<form [formGroup]="myForm" class="form">
+</ion-toolbar>
+</ion-header>
+
+
+<!--<ion-content class="modal"> -->
+<ion-content padding [class]="ismodaldisplay?'modal':''">
+
+<form [formGroup]="myForm" [class]="ismodaldisplay?'procu-form':'form'">
+<ion-fab middle left edge color="danger" *ngIf="ismodaldisplay">
+    <button ion-fab  mini (click)="closeModal()" ><ion-icon name="arrow-round-back" ></ion-icon></button>
+    </ion-fab>
+    
 <div [ngSwitch]="info">
   <div *ngSwitchCase="'BasicInfo'">
-
-    
+ <hr style="background-color:#107698">
 <ion-item>
                 <ion-label stacked color="primary"><ion-icon name="home" color="primary"></ion-icon>* Company Name</ion-label>
-                <ion-input formControlName="Orgn" type="text" placeholder="Full Company Name"  [class.invalid]="!myForm.controls.Orgn.valid && myForm.controls.Orgn.dirty"></ion-input>
+               <ion-input formControlName="Orgn"  [(ngModel)]="Orgn" value={{Orgn}} type="text" [attr.maxlength]="40" [class.invalid]="!myForm.controls.Orgn.valid && myForm.controls.Orgn.dirty"></ion-input>
             </ion-item>
-<ion-item class="error-message" *ngIf="!myForm.controls.Orgn.valid && myForm.controls.Orgn.dirty">
-<p>Company Name Required.No special characters allowed</p>
+            <p class="help" *ngIf="myForm.controls.Orgn.valid && myForm.controls.Orgn.dirty">Full Company Name. 40 char max. Avoid $ . &  /</p>
+<ion-item class="error-message" *ngIf="!myForm.controls.Orgn.valid && myForm.controls.Orgn.dirty" >
+<p>1Full Company Name. 40 char max. Avoid $ . &  /</p>
 </ion-item>
- 
+
  <ion-item> 
         <ion-label  stacked color="primary"><ion-icon name="pin" color="primary"></ion-icon>* City</ion-label>    
-        <ion-input formControlName="City" type="text" placeholder="City Name or Nearest City " [class.invalid]="!myForm.controls.City.valid &&
-myForm.controls.City.dirty"></ion-input>
+        <ion-input formControlName="City" type="text" value={{City}} [(ngModel)] = "City" [attr.maxlength]="20" [class.invalid]="!myForm.controls.City.valid && myForm.controls.City.dirty" ></ion-input>
 </ion-item>
+<p class="help" *ngIf="myForm.controls.City.valid && myForm.controls.City.dirty">City or nearest well known City nearby {{Orgn}}. 20 char max. Avoid $ . &  / </p>
 <ion-item class="error-message" *ngIf="!myForm.controls.City.valid && myForm.controls.City.dirty">
-<p>Enter city or nearest city. No special characters</p></ion-item>
- <hr style="background-color:#107698">
+<p>City or nearest well known City nearby {{Orgn}}. 20 char max. Avoid $ . &  /  </p></ion-item>
         <ion-item>
-               <ion-label  stacked color="primary"><ion-icon name="pricetags" color="primary"></ion-icon>* Product Category</ion-label>
-                    <ion-select formControlName="Category1" placeholder="Primary Product Type" [class.invalid]="!myForm.controls.Category1.valid &&
-myForm.controls.Category1.dirty">
-<ion-option *ngFor="let Catgry of Categories|async">{{Catgry.Category}}</ion-option>
+               <ion-label  stacked color="primary"><ion-icon name="pricetags" color="primary"></ion-icon>* Core Area</ion-label>
+                    <ion-select formControlName="Category1" [(ngModel)]="Category1"  (ionChange)="setProduct($event,1)" [class.invalid]="!myForm.controls.Category1.valid && myForm.controls.Category1.dirty" >
+<ion-option [value]='Catgry.$key' *ngFor="let Catgry of Categories|async">{{Catgry.$key}}</ion-option>
                     </ion-select>
                    
  </ion-item>
-
+<p class="help" *ngIf="myForm.controls.Category1.valid && myForm.controls.Category1.dirty"> Choose Core Business Area of {{Orgn}} </p>
 <ion-item class="error-message" *ngIf="!myForm.controls.Category1.valid && myForm.controls.Category1.dirty">
-<p>Product category required.</p>
+<p>Core business category required.</p>
 </ion-item>
     <ion-item> 
-        <ion-label  stacked color="primary"><ion-icon name="bulb" color="primary"></ion-icon>* My Recommended Product </ion-label>    
-        <ion-input formControlName="MainProduct1" [(ngModel)]="MainProduct1" type="text" placeholder="A company product that you recommend" [class.invalid]="!myForm.controls.MainProduct1.valid && myForm.controls.MainProduct1.dirty">
-</ion-input>
+        <ion-label  stacked color="primary"><ion-icon name="bulb" color="primary"></ion-icon>* Core Product </ion-label>    
+        <ion-select formControlName="MainProduct1" [(ngModel)]="MainProduct1" [class.invalid]="!myForm.controls.MainProduct1.valid &&
+myForm.controls.MainProduct1.dirty" >
+<ion-option [value]='prod.Product' *ngFor="let prod of Products1|async" >{{prod.Product}}</ion-option>
+                    </ion-select>
+                    
 </ion-item>
-<ion-item class="error-message" *ngIf="!myForm.controls.MainProduct1.valid && myForm.controls.MainProduct1.dirty">
-<p>Please enter product that you recommend from this supplier</p>
+<p class="help" *ngIf="myForm.controls.MainProduct1.valid && myForm.controls.MainProduct1.dirty">Choose core product of {{Orgn}} </p>
+<ion-item class="error-message" *ngIf="!myForm.controls.MainProduct1.valid && myForm.controls.MainProduct1.dirty" >
+<p>Core Product Required</p>
 </ion-item>
-{{pageopensource}}
-<hr style="background-color:#107698">
+
   <ion-item>
                 <ion-label stacked color="primary"><ion-icon name="person" color="primary"></ion-icon>* Contact Name</ion-label>
-                <ion-input formControlName="Supplier" [(ngModel)]="Supplier" value={{Supplier}} type="text" placeholder="Contact Name"   [class.invalid]="!myForm.controls.Supplier.valid && myForm.controls.Supplier.dirty"></ion-input>
+                <ion-input formControlName="Supplier" [(ngModel)]="Supplier" value={{Supplier}} type="text"   [attr.maxlength]="30" [class.invalid]="!myForm.controls.Supplier.valid && myForm.controls.Supplier.dirty" ></ion-input>
             </ion-item>
+            <p class="help" *ngIf="myForm.controls.Supplier.valid && myForm.controls.Supplier.dirty"> Contact Person in {{Orgn}}  30 char max. Avoid $ . &  /</p>
 <ion-item class="error-message" *ngIf="!myForm.controls.Supplier.valid && myForm.controls.Supplier.dirty">
-<p>Contact Name Required.No special characters(.,&,$ etc) allowed</p>
+<p>Contact Person in {{Orgn}}  30 char max. Avoid $ . &  /</p>
 </ion-item>
-<ion-item *ngIf="pageopensource!=='ContactList'">
+<ion-item>
                 <ion-label stacked color="primary"><ion-icon name="call" color="primary"></ion-icon>* Contact Phone</ion-label>
-                <ion-input formControlName="Phone" [(ngModel)]="Phone" value={{Phone}} type="tel" [attr.maxlength]="10" placeholder="Contact Phone"   [class.invalid]="!myForm.controls.Phone.valid && myForm.controls.Phone.dirty"></ion-input>
+                <ion-input formControlName="Phone" [(ngModel)]="Phone" value={{Phone}} type="tel" [attr.maxlength]="10"    [class.invalid]="!myForm.controls.Phone.valid && myForm.controls.Phone.dirty" ></ion-input>
             </ion-item>
-<ion-item class="error-message" *ngIf="!myForm.controls.Phone.valid && myForm.controls.Phone.dirty">
-<p>Mobile numbers only.</p>
+            <p class="help" *ngIf="myForm.controls.Phone.valid && myForm.controls.Phone.dirty"> Mobile number of {{Supplier}} </p>
+           
+<ion-item class="error-message" *ngIf="!myForm.controls.Phone.valid && myForm.controls.Phone.dirty" >
+<p>Mobile number of {{Supplier}}</p>
 </ion-item>
 <ion-item>
                 <ion-label stacked color="primary"><ion-icon name="at" color="primary"></ion-icon>* Contact Email</ion-label>
-                <ion-input formControlName="email" type="email" placeholder="Contact Email"></ion-input>
+                <ion-input formControlName="email" [(ngModel)]="email" value={{email}} type="email"  ></ion-input>
             </ion-item>
-<hr style="background-color:#107698">
+            <p class="help" *ngIf="myForm.controls.email.valid && myForm.controls.email.dirty"> Email address of {{Supplier}} </p>
+
 
  <ion-item>   
    <ion-label  stacked color="primary"><ion-icon name="chatboxes" color="primary"></ion-icon>  Company Speciality</ion-label>     
-        <ion-textarea formControlName="Comments" placeholder="e.g. supplier positive aspects , areas of concerns etc."></ion-textarea>
+        <ion-textarea formControlName="Comments" [(ngModel)]="Comments" value={{Comments}} ></ion-textarea>
  </ion-item>
-<hr style="background-color:#107698">
-
+ <p class="help" *ngIf="myForm.controls.Comments.valid && myForm.controls.Comments.dirty">{{Orgn}} - positive aspects , areas of concerns , speciality </p>
+<ion-item> 
+        <ion-label  stacked color="primary"><ion-icon name="navigate" color="primary"></ion-icon> Company website</ion-label>    
+        <ion-input formControlName="website" type="url" [(ngModel)]="website" value={{website}} placeholder="http://" [class.invalid]="!myForm.controls.website.valid && myForm.controls.website.dirty" ></ion-input> 
+</ion-item>
+<p class="help" *ngIf="myForm.controls.website.valid && myForm.controls.website.dirty"> Offical website address of {{Orgn}}</p>
+ <ion-item class="error-message" *ngIf="!myForm.controls.website.valid && myForm.controls.website.dirty">
+<p>Incorrect website format. Use http://www.</p>
+</ion-item>
  </div>
 
  <div *ngSwitchCase="'AddInfo'">
  <hr style="background-color:#107698">
 
- 
 
-
-<ion-item> 
-        <ion-label  stacked color="primary"><ion-icon name="navigate" color="primary"></ion-icon> Company website</ion-label>    
-        <ion-input formControlName="website" type="url" placeholder="http://" [class.invalid]="!myForm.controls.website.valid && myForm.controls.website.dirty"></ion-input> 
-</ion-item>
- <ion-item class="error-message" *ngIf="!myForm.controls.website.valid && myForm.controls.website.dirty">
-<p>Incorrect website format. Use http://www.</p>
-</ion-item>
-<ion-row>
-<ion-col>
 <ion-item> 
         <ion-label  stacked color="primary"><ion-icon name="cash" color="primary"></ion-icon> Annual Business Turnover</ion-label>    
-        <ion-input formControlName="Turnover" type="number"></ion-input>
+        <ion-input formControlName="Turnover"[(ngModel)]="Turnover" value={{Turnover}} type="number" ></ion-input>
         
 </ion-item>
 
-</ion-col>
-<ion-col>
-in 
- <ion-list>
+
+
+<ion-row radio-group >
+<ion-col col-4>
   <ion-item>
-    
-    <ion-select>
-      <ion-option value=100000>Lakhs</ion-option>
-      <ion-option value=1000000>millions</ion-option>
-      <ion-option value=10000000>Crores</ion-option>
-    </ion-select>
+    <ion-label>lakhs</ion-label>
+    <ion-radio checked="true" value=100000></ion-radio>
   </ion-item>
-</ion-list>
 </ion-col>
-</ion-row>
+<ion-col col-4>
+  <ion-item>
+    <ion-label>millions</ion-label>
+    <ion-radio value=1000000></ion-radio>
+  </ion-item>
+</ion-col>
+<ion-col col-4>
+  <ion-item>
+    <ion-label>crores</ion-label>
+    <ion-radio value=10000000></ion-radio>
+  </ion-item>
+  </ion-col>
+  </ion-row>
+
+
  <hr style="background-color:#107698">
 <ion-item> 
-        <ion-label  stacked color="primary"><ion-icon name="pie" color="primary"></ion-icon> % Market Share of {{MainProduct1}}</ion-label>    
-        <ion-input formControlName="MainProduct1Share" type="number"></ion-input> 
+        <ion-label  stacked color="primary"><ion-icon name="pie" color="primary"></ion-icon> % Share of {{MainProduct1}}</ion-label>    
+        <ion-input formControlName="MainProduct1Share" [(ngModel)]="MainProduct1Share" value={{MainProduct1Share}} type="number" [class.invalid]="!myForm.controls.MainProduct1Share.valid && myForm.controls.MainProduct1Share.dirty" ></ion-input> 
+</ion-item>
+<p class="help" *ngIf="myForm.controls.MainProduct1Share.valid && myForm.controls.MainProduct1Share.dirty"> % Share of {{MainProduct1}} in the business</p>
+ <ion-item class="error-message" *ngIf="!myForm.controls.MainProduct1Share.valid && myForm.controls.MainProduct1Share.dirty" >
+<p>Use numbers between 1 & 99 only. No decimals</p>
 </ion-item>
 <ion-item>
-               <ion-label  stacked color="primary"><ion-icon name="pricetags" color="primary"></ion-icon>Product Category 2</ion-label>
-                    <ion-select formControlName="Category2"[class.invalid]="!myForm.controls.MainProduct2.valid &&
-myForm.controls.MainProduct2.dirty">
+               <ion-label  stacked color="primary"><ion-icon name="pricetags" color="primary"></ion-icon>Core Area 2</ion-label>
+                    <ion-select formControlName="Category2" [(ngModel)]="Category2"  (ionChange)="setProduct($event,2)">
 <ion-option></ion-option>
-<ion-option *ngFor="let Catgry of Categories|async">{{Catgry.Category}}</ion-option>
+<ion-option *ngFor="let Catgry of Categories|async">{{Catgry.$key}}</ion-option>
                     </ion-select>
                    
  </ion-item>
-<ion-item class="error-message" *ngIf="!myForm.controls.MainProduct2.valid && myForm.controls.MainProduct2.dirty">
-<p>Product Name Required</p>
+
+    <ion-item> 
+        <ion-label  stacked color="primary"><ion-icon name="bulb" color="primary"></ion-icon> Core Product 2 </ion-label>    
+        <ion-select formControlName="MainProduct2" [(ngModel)]="MainProduct2" [class.invalid]="!myForm.controls.MainProduct2.valid && myForm.controls.Category2.dirty">
+<ion-option [value]='prod2.Product' *ngFor="let prod2 of Products2|async" >{{prod2.Product}}</ion-option>
+                    </ion-select>
+                    
 </ion-item>
- <ion-item> 
-        <ion-label  stacked color="primary"><ion-icon name="bulb" color="primary"></ion-icon> Product 2</ion-label>    
-        <ion-input formControlName="MainProduct2" [(ngModel)]="MainProduct2" type="text"></ion-input>
-            </ion-item>
+<ion-item class="error-message" *ngIf="!myForm.controls.MainProduct2.valid && myForm.controls.Category2.dirty">
+<p>Core product offering under {{Category2}} required</p>
+</ion-item>
+
 
  <ion-item *ngIf="MainProduct2"> 
         <ion-label  stacked color="primary"><ion-icon name="pie" color="primary"></ion-icon> % Market Share of {{MainProduct2}}</ion-label>    
-        <ion-input formControlName="MainProduct2Share" type="number"></ion-input> 
+        <ion-input formControlName="MainProduct2Share" [(ngModel)]="MainProduct2Share" type="number" [class.invalid]="!myForm.controls.MainProduct2Share.valid && myForm.controls.MainProduct2Share.dirty"  ></ion-input> 
 </ion-item>
+<ion-item class="error-message" *ngIf="!myForm.controls.MainProduct2Share.valid && myForm.controls.MainProduct2Share.dirty">
+<p>Use numbers between 1 & 99 only. No decimals</p>
+</ion-item>
+
  <ion-item>
-               <ion-label  stacked color="primary"><ion-icon name="pricetags" color="primary"></ion-icon>Product Category 3</ion-label>
-                    <ion-select formControlName="Category3" [(ngModel)]="MainProduct3">
-<ion-option></ion-option>
-<ion-option *ngFor="let Catgry of Categories|async">{{Catgry.Category}}</ion-option>
+               <ion-label  stacked color="primary"><ion-icon name="pricetags" color="primary"></ion-icon>Core Area 3</ion-label>
+                    <ion-select formControlName="Category3" [(ngModel)]="Category3" (ionChange)="setProduct($event,3)"  >
+<ion-option></ion-option> 
+<ion-option *ngFor="let Catgry of Categories|async">{{Catgry.$key}}</ion-option>
                     </ion-select>
                    
  </ion-item>
-
- <ion-item> 
-        <ion-label  stacked color="primary"><ion-icon name="bulb" color="primary"></ion-icon> Product 3</ion-label>    
-        <ion-input formControlName="MainProduct3" type="text"></ion-input>
-</ion-item> 
+    <ion-item> 
+        <ion-label  stacked color="primary"><ion-icon name="bulb" color="primary"></ion-icon> Core Product 3</ion-label>    
+        <ion-select formControlName="MainProduct3" [(ngModel)]="MainProduct3" [class.invalid]="!myForm.controls.MainProduct3.valid &&
+myForm.controls.Category3.dirty"  >
+<ion-option [value]='prod3.Product' *ngFor="let prod3 of Products3|async" >{{prod3.Product}}</ion-option>
+                    </ion-select>
+                    
+</ion-item>
+<ion-item class="error-message" *ngIf="!myForm.controls.MainProduct3.valid && myForm.controls.Category3.dirty">
+<p>Core product offering under {{Category3}} required</p>
+</ion-item>
 
 
 <ion-item *ngIf="MainProduct3"> 
         <ion-label  stacked color="primary"><ion-icon name="pie" color="primary"></ion-icon> % Market Share of {{MainProduct3}}</ion-label>    
-        <ion-input formControlName="MainProduct3Share" type="number"></ion-input> 
+        <ion-input formControlName="MainProduct3Share" [(ngModel)]="MainProduct3Share" value={{MainProduct3Share}} type="number" [class.invalid]="!myForm.controls.MainProduct3Share.valid && myForm.controls.MainProduct3Share.dirty"  ></ion-input> 
 </ion-item> 
+<ion-item class="error-message" *ngIf="!myForm.controls.MainProduct3Share.valid && myForm.controls.MainProduct3Share.dirty">
+<p>Use numbers between 1 & 99 only. No decimals</p>
+</ion-item>
 <hr style="background-color:#107698">
   <ion-item>
                 <ion-label stacked color="primary"><ion-icon name="person" color="primary"></ion-icon>Alternate Contact Name</ion-label>
-                <ion-input formControlName="AltContact" type="text" placeholder="Alternate Contact Name"></ion-input>
+                <ion-input formControlName="AltContact" [(ngModel)]="AltContact" value={{AltContact}} [attr.maxlength]="30" type="text"[class.invalid]="!myForm.controls.AltContact.valid &&
+myForm.controls.AltContact.dirty"  ></ion-input>
             </ion-item>
+            <ion-item class="error-message" *ngIf="!myForm.controls.AltContact.valid && myForm.controls.AltContact.dirty">
+<p>Alternate Contact Should be 30 char max. Avoid $. , / &</p>
+</ion-item>
 <ion-item>
                 <ion-label stacked color="primary"><ion-icon name="call" color="primary"></ion-icon>Alternate Contact Phone</ion-label>
-                <ion-input formControlName="AltPhone" type="tel" [attr.maxlength]="10" placeholder="Alternate Contact Phone"></ion-input>
+                <ion-input formControlName="AltPhone" [(ngModel)]="AltPhone" value={{AltPhone}} type="tel" [attr.maxlength]="10"  ></ion-input>
             </ion-item>
 <ion-item>
                 <ion-label stacked color="primary"><ion-icon name="at" color="primary"></ion-icon>Alternate Contact Email</ion-label>
-                <ion-input formControlName="AltEmail" type="email" placeholder="Alternate Contact Email"></ion-input>
+                <ion-input formControlName="AltEmail" [(ngModel)]="AltEmail" value={{AltEmail}} type="email"  ></ion-input>
             </ion-item>
 
  </div> 
  </div>
- <ion-label  stacked ><ion-icon name="star" color="primary"></ion-icon>  Your Overall Rating of the Company</ion-label>    
-        <ion-rating 
+ <ion-label  stacked *ngIf="!ismodaldisplay"><ion-icon name="star" color="primary"></ion-icon><h3>  Your Overall Rating of the Company</h3></ion-label>    
+        <h3><ion-rating 
     [numStars]="5"
     [readOnly]="false"
-    [value]="0"
-    (clicked)="starClicked($event)"> 
-</ion-rating>
+    [value]=0
+    (clicked)="starClicked($event)" *ngIf="!ismodaldisplay"> 
+</ion-rating></h3>
 <hr style="background-color:#107698">
- 
+
+<button ion-button (click)="closeModal()" ><ion-icon name="arrow-round-back" outline ></ion-icon>Cancel</button>
+<button ion-button (click)="submit()" [disabled]="!myForm.valid" *ngIf="showsave==true && !ismodaldisplay"><ion-icon name="download"></ion-icon>Save Info</button> 
+  <button ion-button (click)="submit()" [disabled]="!myForm.valid" *ngIf="showsave==false && !ismodaldisplay"><ion-icon name="checkmark"></ion-icon>Submit Info</button>  
  </form>
- <div padding>
-  <ion-segment [(ngModel)]="info">
-    <ion-segment-button value="BasicInfo">
-      Basic Information
-    </ion-segment-button>
-    <ion-segment-button value="AddInfo">
-      Company Profile
-    </ion-segment-button>
-  </ion-segment>
-<button ion-button (click)="closeModal()" ><ion-icon name="arrow-round-back" clear ></ion-icon>Cancel</button>
-
-
-  <button ion-button (click)="save()" [disabled]="!myForm.valid"><ion-icon name="checkmark"></ion-icon>Submit Info</button>  
-</div>
 </ion-content>
