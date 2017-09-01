@@ -52,7 +52,7 @@ else{
 };
 }
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SearchResultPage');
+    // console.log('ionViewDidLoad SearchResultPage');
    
   }
 goHome(){
@@ -73,11 +73,12 @@ this.db.object('/Orgn/'+orgn,{preserveSnapshot:true})
            var rateobj=snapshot.val();
            if (rateobj){
             var trxnvl=rateobj.rate*1;
-            console.log('trxnval='+trxnvl);
+            // console.log('trxnval='+trxnvl);
             if(trxnvl>0){
                         subtotal += trxnvl;
                         count++; 
-           console.log('subtotal='+subtotal);}
+           // console.log('subtotal='+subtotal);
+           }
     }
        })
        

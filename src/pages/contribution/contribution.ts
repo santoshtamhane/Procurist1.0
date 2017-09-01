@@ -28,7 +28,7 @@ public uid:any;
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ContributionPage');
+    // console.log('ionViewDidLoad ContributionPage');
   }
 goHome(){
     this.navCtrl.setRoot(HomePage);
@@ -64,7 +64,7 @@ openMenu() {
           role: 'cancel', // will always sort to be on the bottom
           icon: 'close',
           handler: () => {
-            console.log('Cancel clicked');
+            // console.log('Cancel clicked');
           }
         }
       ]
@@ -90,7 +90,7 @@ openMenu() {
         {
           text: 'Cancel',
           handler: data => {
-            console.log('Cancel clicked');
+            // console.log('Cancel clicked');
           }
         },
         {

@@ -31,7 +31,7 @@ public searches:FirebaseListObservable<any[]>;
    }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SearchQueryPage');
+    // console.log('ionViewDidLoad SearchQueryPage');
   }
     //searchquery=searchquery.replace(/\/\//g, '/');//replaces double forward slash to single
       

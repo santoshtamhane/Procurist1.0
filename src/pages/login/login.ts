@@ -38,11 +38,11 @@ Validators.required])]
 goToResetPassword():void { this.navCtrl.push('ResetPasswordPage'); }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+    // console.log('ionViewDidLoad LoginPage');
   }
 loginUser():void {
 if (!this.loginForm.valid){
-console.log(this.loginForm.value);
+// console.log(this.loginForm.value);
 } else {
 this.authProvider.loginUser(this.loginForm.value.email,
 this.loginForm.value.password).then( () => {

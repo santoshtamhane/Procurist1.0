@@ -22,23 +22,23 @@ Create an Account
 </ion-navbar>
 </ion-header>
 <ion-content padding>
-<img src="assets/img/logo.jpg" class="auth-img">
+<!-- <img src="assets/img/logo.jpg" class="auth-img"> -->
 <form [formGroup]="signupForm" (submit)="signupUser()" novalidate>
  <ion-item>
       <ion-label stacked>Name</ion-label>
-      <ion-input formControlName="myName" placeholder="Your Name" >
+      <ion-input formControlName="myName" [(ngModel)]="myName" placeholder="Name" >
        </ion-input>
     </ion-item>
     
     <ion-item>
       <ion-label stacked>Phone</ion-label>
-      <ion-input formControlName="myPhone" placeholder="Your Mobile Number" >
+      <ion-input formControlName="myPhone" placeholder="Mobile Number"[attr.maxlength]=10 >
        </ion-input>
     </ion-item>
     
     <ion-item>
       <ion-label stacked>Organization</ion-label>
-      <ion-input formControlName="myOrg" placeholder="Your Organization" >
+      <ion-input formControlName="myOrg" placeholder="Organization Name" >
        </ion-input>
     </ion-item>
     
@@ -56,16 +56,35 @@ Create an Account
 
     <ion-item>
       <ion-label stacked>Password</ion-label>
-      <ion-input formControlName="password" type="password" placeholder="Your password" 
+      <ion-input formControlName="password" type="password" placeholder="Default password" 
         [class.invalid]="!signupForm.controls.password.valid && signupForm.controls.password.dirty">
       </ion-input>
     </ion-item>
     <ion-item class="error-message" 
       *ngIf="!signupForm.controls.password.valid  && signupForm.controls.password.dirty">
-      <p>Your password needs more than 6 characters.</p>
+      <p>Default password needs more than 6 characters.</p>
     </ion-item>
+
+      <ion-row radio-group formControlName="isAdmin" [(ngModel)]="isAdmin" value=0>
+<ion-col col-4>
+<ion-label text-wrap>Assign Admin Role?</ion-label>
+</ion-col>
+  <ion-col col-4>
+  <ion-item>
+    <ion-label>Yes</ion-label>
+    <ion-radio value=1></ion-radio>
+  </ion-item>
+</ion-col>
+<ion-col col-4>
+  <ion-item>
+    <ion-label>No</ion-label>
+    <ion-radio checked value=0></ion-radio>
+  </ion-item>
+  </ion-col>
+  </ion-row>
+
 <button ion-button block type="submit" [disabled]="!signupForm.valid">
-Create an Account
+Create an Account for {{myName ? myName:'user'}}
 </button>
 </form>
 </ion-content>

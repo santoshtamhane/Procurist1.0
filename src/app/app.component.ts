@@ -28,9 +28,9 @@ authListener.unsubscribe();
 
 // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'My Profile', component: UserProfilePage,icon:'person' },
-       { title: 'My Contributions', component: ContributionPage,icon:'share' },
-      { title: 'Search', component: SearchQueryPage,icon:'search' }
+      { title: '  My Profile', component: UserProfilePage,icon:'person' },
+       { title: '  My Contributions', component: ContributionPage,icon:'share' },
+      { title: '  Search', component: SearchQueryPage,icon:'search' }
           ];
    
 

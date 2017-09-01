@@ -1,4 +1,4 @@
-import { FormControl,FormGroup } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { Injectable } from '@angular/core';
 /*
   Generated class for the EmailProvider provider.
@@ -10,7 +10,7 @@ import { Injectable } from '@angular/core';
 export class EmailProvider {
 
   constructor() {
-    console.log('Hello EmailProvider Provider');
+    // console.log('Hello EmailProvider Provider');
   }
 static isValid(control: FormControl){
 const re = /^([a-zA-Z0-9_\-\.]+)@(?!gmail|yahoo|outlook|hotmail|mail|inbox}icloud|facebook)([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(control.value);
@@ -24,15 +24,5 @@ const re = /^([a-zA-Z0-9_\-\.]+)@(?!gmail|yahoo|outlook|hotmail|mail|inbox}iclou
     };
 
   }
-  static isProduct2Reqd(control:FormControl){
-     
-         /*     if (group.get('Category2').value) {
-          return null;
-        }*/
 
-      return{
-          "isProduct2Reqd":true
-      }
-  
-}
 }

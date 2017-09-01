@@ -1,4 +1,4 @@
-import { Component ,OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import { NavController, NavParams,ViewController ,AlertController,ToastController,ModalController} from 'ionic-angular';
 
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
@@ -62,11 +62,11 @@ this.rateForm.get('SubmittedBy').setValue(this.curruser.email);
         this.closeModal();
   }
   ionViewDidLoad() {
-    console.log('ionViewDidLoad RatePage');
+    // console.log('ionViewDidLoad RatePage');
          this.curruser=this.authData.getUser();
   }
 starClicked(value){
-  // console.log("rating :", value);
+  // // console.log("rating :", value);
    this.rateForm.get('rate').setValue(value);
 }
 }

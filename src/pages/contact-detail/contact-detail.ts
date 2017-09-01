@@ -5,7 +5,7 @@ import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 //import { TagsInputModule } from 'ionic2-tags-input';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AuthProvider } from '../../providers/auth/auth';
-import {EmailProvider}  from '../../providers/email/email';
+//import {EmailProvider}  from '../../providers/email/email';
 //import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 import * as firebase from 'firebase';
@@ -160,11 +160,11 @@ closeModal() {
   }
 
 starClicked(value){
-  // console.log("rating :", value);
+  // // console.log("rating :", value);
    this.myForm.get('rate').setValue(value);
 }
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ContactDetailPage');
+    // console.log('ionViewDidLoad ContactDetailPage');
     //this.debugAlert('contact-detail','page');
   }
   setProduct(prodkey:string,itemnum:number){
@@ -181,7 +181,7 @@ starClicked(value){
     
 }
       
-      console.log('prodkey='+prodkey);
+      // console.log('prodkey='+prodkey);
   }
   
 submit(){
@@ -223,8 +223,8 @@ this.myForm.get('MainProduct3').setValue(this.myForm.get('MainProduct3').value?t
       if(!this.mk){
       var mainkey=this.db.list('/Company/').push({}).key;}
       else {mainkey=this.mk;}
-      console.log('mainkey='+mainkey);
-      console.log(this.myForm.value);
+      // console.log('mainkey='+mainkey);
+      // console.log(this.myForm.value);
     var updates = {};
   updates['/Company/' + mainkey] = this.myForm.value;
   updates['/bySubmitter/' + this.curruser.uid + '/' + mainkey] = this.myForm.value;
@@ -234,7 +234,7 @@ this.myForm.get('MainProduct3').setValue(this.myForm.get('MainProduct3').value?t
   updates['/bycategory-prod-loc/'+ this.myForm.get('Category1').value + '/' + this.myForm.get('MainProduct1').value+'/'+this.myForm.get('City').value+'/'+mainkey] = this.myForm.value;
   updates['/byContactPhone/' + this.myForm.get('Phone').value + '/' + mainkey] = this.myForm.value;
   if (this.myForm.get('Category2').value!=null ){
-      console.log('if value='+this.myForm.get('Category2').value);
+      // console.log('if value='+this.myForm.get('Category2').value);
   updates['/Category/' + this.myForm.get('Category2').value + '/' + mainkey] = this.myForm.value;
   updates['/byProduct/' + this.myForm.get('Category2').value + '/' + this.myForm.get('MainProduct2').value+'/'+mainkey] = this.myForm.value;
   updates['/bycategory-prod-loc/'+ this.myForm.get('Category2').value + '/' + this.myForm.get('MainProduct2').value+'/'+this.myForm.get('City').value+'/'+mainkey] = this.myForm.value;
